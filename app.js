@@ -585,7 +585,7 @@
       <div class="vital-grid" style="margin-top:9px;">
         <div class="vital-box"><div class="lab">SUHU</div><div class="val ${h.temp>=38?'val-danger':'val-ok'}">${h.temp.toFixed(1)}°C</div></div>
         <div class="vital-box"><div class="lab">SPO2</div><div class="val ${h.spo2<95?'val-danger':'val-ok'}">${h.spo2}%${h.spo2<95?' ↓':''}</div></div>
-        <div class="vital-box"><div class="lab">RESPIRASI</div><div class="val">${h.rr}<span style="font-size:10px;"> x/min</span></div></div>
+        <div class="vital-box"><div class="lab">LAJU NAPAS</div><div class="val">${h.rr}<span style="font-size:10px;"> x/min</span></div></div>
         <div class="vital-box"><div class="lab">RETRAKSI</div><div class="val ${h.chest?'val-danger':'val-ok'}">${h.chest?"Ya":"Tidak"}</div></div>
       </div>
     </div>`;
