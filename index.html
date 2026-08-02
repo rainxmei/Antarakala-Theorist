@@ -51,7 +51,7 @@
                     <img src="assets/logo-icon.png" alt="ANTARAKALA" class="logo-img">
                   </div>
                   <h2>Mulai Pemeriksaan Baru</h2>
-                  <p>Sambungkan perangkat ANTARAKALA untuk memulai skrining risiko penyakit pernapasan bawah balita secara real-time.</p>
+                  <p>Sambungkan dengan perangkat fisik ANTARAKALA untuk memulai deteksi risiko penyakit pernapasan bawah balita secara real-time.</p>
                   <button class="btn" data-nav="input-pasien">Mulai Sekarang
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
                   </button>
@@ -63,11 +63,6 @@
                     <div class="ic" style="background:var(--green-100)"><svg viewBox="0 0 24 24" fill="none" stroke="#0E6E4A" stroke-width="2" stroke-linecap="round"><path d="M17 21v-2a4 4 0 00-4-4H7a4 4 0 00-4 4v2"/><circle cx="10" cy="7" r="4"/></svg></div>
                     <span>Pasien Diperiksa</span>
                     <b id="statPasien">0</b>
-                  </div>
-                  <div class="summary-card-full">
-                    <div class="ic" style="background:var(--red-100)"><svg viewBox="0 0 24 24" fill="none" stroke="#D9364A" stroke-width="2" stroke-linecap="round"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg></div>
-                    <span>Tanda Bahaya</span>
-                    <b id="statBahaya">0</b>
                   </div>
                 </div>
 
@@ -88,7 +83,7 @@
                 </button>
                 <span class="brand-name" style="font-size:15px;">Pemeriksaan Awal</span>
                 <div class="header-side">
-                  <span class="tag-focus" style="white-space:nowrap;">Initial Screening</span>
+                  
                 </div>
               </header>
               <div class="screen-body">
@@ -96,14 +91,14 @@
                 <div class="card">
                   <div class="card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-3.3 3.6-6 8-6s8 2.7 8 6"/></svg>
-                    Data Pasien <span style="font-weight:400; color:var(--ink-300); margin-left:auto; font-size:10.5px;">Demographics</span>
+                    Data Pasien
                   </div>
                   <div class="field">
-                    <label>Nama Lengkap <span class="sub-en">Full Name</span></label>
+                    <label>Nama Lengkap</label>
                     <input type="text" id="pName" placeholder="Masukkan nama pasien...">
                   </div>
                   <div class="field">
-                    <label>Usia <span class="sub-en">Age</span></label>
+                    <label>Usia</label>
                     <div class="unit-input">
                       <input type="number" id="pAge" placeholder="0" min="0" max="59">
                       <span>Bulan / Mo</span>
@@ -114,21 +109,22 @@
                 <div class="card">
                   <div class="card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 3h6l1 4H8l1-4z"/><path d="M6 7h12l1 13a1 1 0 01-1 1H6a1 1 0 01-1-1L6 7z"/></svg>
-                    Konteks Klinis <span style="font-weight:400; color:var(--ink-300); margin-left:auto; font-size:10.5px;">Clinical Context</span>
+                    Konteks Klinis
                   </div>
                   <div class="field">
-                    <label>Status Imunisasi PCV <span class="sub-en">Basic Immunization Status</span></label>
+                    <label>Status Imunisasi PCV</label>
                     <div class="seg seg-block" id="pPCV">
-                      <button data-val="lengkap"><b>Lengkap</b><span>Complete</span></button>
-                      <button data-val="belum"><b>Belum Lengkap</b><span>Incomplete</span></button>
-                      <button data-val="tidaktahu"><b>Tidak Tahu</b><span>Unknown</span></button>
+                      <button data-val="lengkap"><b>Lengkap</b></button>
+                      <button data-val="belum"><b>Belum Lengkap</b></button>
+                      <button data-val="tidaktahu"><b>Tidak Tahu</b></button>
                     </div>
                   </div>
                   <div class="field">
-                    <label>Riwayat Mengi / Sesak Napas Berulang <span class="sub-en">History of Recurrent Wheezing</span></label>
+                    <label>Riwayat Wheezing</label>
                     <div class="seg seg-radio" id="pWheeze">
-                      <button data-val="ya"><i class="dot"></i><span><b>Ya</b><em>Yes</em></span></button>
-                      <button data-val="tidak"><i class="dot"></i><span><b>Tidak</b><em>No</em></span></button>
+                      <button data-val="ya"><i class="dot"></i><span><b>Ya</b></span></button>
+                      <button data-val="tidak"><i class="dot"></i><span><b>Tidak</b></span></button>
+                      <button data-val="tidaktahu"><i class="dot"></i><span><b>Tidak Tahu</b></span></button>
                     </div>
                   </div>
                 </div>
@@ -246,7 +242,7 @@
                 <!-- <div class="header-side"><div class="avatar-circle">CP</div></div> -->
               </header>
               <div class="screen-body">
-                <div class="h1" style="font-size:18px;">Input Parameter Skoring</div>
+                <div class="h1" style="font-size:18px;">Input Parameter Manual</div>
                 <p class="subtext" id="paramPatientLine">Pasien: — <br>Pertemuan: #1</p>
 
                 <div class="alert alert-amber" id="spo2Warning" style="display:none;">
@@ -257,22 +253,22 @@
                 <div class="card">
                   <div class="card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg>
-                    Tanda-tanda Vital <span style="font-weight:400; color:var(--ink-300); margin-left:auto; font-size:10.5px;">Vital Signs</span>
+                    Tanda-tanda Vital
                   </div>
                   <div class="field">
-                    <label>Suhu Tubuh <span class="sub-en">Body Temperature (°C)</span></label>
+                    <label>Suhu Tubuh</label>
                     <div class="unit-input"><input type="number" id="vTemp" step="0.1" placeholder="Contoh: 36.8"><span>°C</span></div>
                   </div>
                   <div class="field">
-                    <label>SpO2 <span class="sub-en">Oxygen Saturation (%)</span></label>
+                    <label>SpO2</label>
                     <div class="unit-input"><input type="number" id="vSpo2" placeholder="Contoh: 97"><span>%</span></div>
                   </div>
                 </div>
 
-                <div class="alert alert-info" style="margin-bottom:0;">
+                <!-- <div class="alert alert-info" style="margin-bottom:0;">
                   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="4" y="10" width="16" height="10" rx="2"/><path d="M8 10V7a4 4 0 018 0v3"/></svg>
                   <p>Laju napas &amp; tarikan dinding dada (chest indrawing) dihitung otomatis oleh sensor IMU melalui mekanisme sensor fusion — tidak perlu diinput manual.</p>
-                </div>
+                </div> -->
               </div>
               <div style="padding:0 18px 18px;">
                 <div class="btn-row">
@@ -298,8 +294,8 @@
                   <div class="spin-ring">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M12 2a4 4 0 00-4 4v5a4 4 0 008 0V6a4 4 0 00-4-4z"/><path d="M6 11a6 6 0 0012 0M12 17v4"/></svg>
                   </div>
-                  <h3>Menganalisis suara paru…</h3>
-                  <p>Kecerdasan Buatan (AI) sedang menganalisis suara paru dan parameter klinis untuk mendeteksi risiko LRTI — seluruhnya berjalan lokal di perangkat, tanpa internet.</p>
+                  <h3>Sistem Sedang Menganalisis…</h3>
+                  <p>Sistem sedang menganalisis suara paru dan parameter lainnya untuk mendeteksi risiko penyakit pernapasan bawah balita</p>
                 </div>
 
                 <div class="step-list" id="aiSteps">
@@ -340,23 +336,31 @@
                 <div class="card">
                   <div class="card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-                    Parameter Kritis <span style="font-weight:400; color:var(--ink-300); margin-left:auto; font-size:10.5px;">Critical Vitals</span>
+                    Parameter Kritis
                   </div>
                   <div class="crit-grid">
-                    <div class="crit-box" id="critSpo2"><div class="lab">SpO2 <span>Oxygen Saturation</span></div><div class="crit-val">—%</div><div class="crit-tag">—</div></div>
-                    <div class="crit-box" id="critRR"><div class="lab">Napas (RR) <span>Resp. Rate</span></div><div class="crit-val">—</div><div class="crit-tag">—</div></div>
-                    <div class="crit-box" id="critTemp"><div class="lab">Suhu Tubuh <span>Temperature</span></div><div class="crit-val">—</div><div class="crit-tag">—</div></div>
-                    <div class="crit-box" id="critChest"><div class="lab">Tarikan Dada <span>Chest Indrawing</span></div><div class="crit-val">—</div><div class="crit-tag">—</div></div>
+                    <div class="crit-box" id="critSpo2"><div class="lab">SpO2</div><div class="crit-val">—%</div><div class="crit-tag">—</div></div>
+                    <div class="crit-box" id="critRR"><div class="lab">Napas (RR)</div><div class="crit-val">—</div><div class="crit-tag">—</div></div>
+                    <div class="crit-box" id="critTemp"><div class="lab">Suhu Tubuh</div><div class="crit-val">—</div><div class="crit-tag">—</div></div>
+                    <div class="crit-box" id="critChest"><div class="lab">Tarikan Dada</div><div class="crit-val">—</div><div class="crit-tag">—</div></div>
                   </div>
                 </div>
 
                 <div class="card">
                   <div class="card-title">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
-                    Tindakan Rekomendasi <span style="font-weight:400; color:var(--ink-300); margin-left:auto; font-size:10.5px;">Recommended Actions</span>
+                    Tindakan Rekomendasi
                   </div>
                   <div id="actionChecklist" class="check-list"></div>
                   <p style="font-size:10.5px; color:var(--ink-500); margin-top:10px; line-height:1.5;" id="resultActionNote"></p>
+                </div>
+
+                <div class="card">
+                  <div class="card-title">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                    Hasil Auskultasi 6 Titik
+                  </div>
+                  <div id="resultPointList" class="point-list"></div>
                 </div>
               </div>
               <div style="padding:0 18px 18px; display:flex; flex-direction:column; gap:10px;">
@@ -378,12 +382,12 @@
                 <!-- <div class="header-side"><div class="avatar-circle">CP</div></div> -->
               </header>
               <div class="screen-body">
-                <div class="h1" style="font-size:18px;">Penjelasan Keputusan AI</div>
-                <p class="subtext">Tinjauan faktor klinis yang mendasari hasil skrining.</p>
+                <div class="h1" style="font-size:18px;">Penjelasan AI</div>
+                <p class="subtext">Tinjauan faktor klinis yang mendasari hasil deteksi risiko</p>
 
                 <div class="alert alert-red" id="aiConclusionBox">
                   <div>
-                    <h3>Kesimpulan AI</h3>
+                    <h3>Kesimpulan</h3>
                     <p id="aiConclusionText">Memuat kesimpulan...</p>
                   </div>
                 </div>
@@ -391,16 +395,15 @@
                 <div class="card" style="background:transparent; border:none; box-shadow:none; padding:0;">
                   <div class="card-title" style="padding:0 2px;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 3v18h18"/><path d="M7 14l4-4 3 3 5-6"/></svg>
-                    Bukti Suara Paru (Analisis AI)
-                    <span class="tag-focus" style="margin-left:auto;">Spektrogram Fokus</span>
-                  </div>
-                  <div class="legend-row" style="padding:0 2px;">
-                    <div class="legend-dot"><i style="background:var(--red-600)"></i>Suara Abnormal</div>
-                    <div class="legend-dot"><i style="background:#8FD8C4"></i>Suara Normal</div>
+                    Bukti Akustik Suara Paru
                   </div>
                   <div class="spectro-card">
-                    <canvas id="spectroCanvas" width="600" height="300"></canvas>
+                    <canvas id="spectroCanvas" width="680" height="266"></canvas>
                     <p class="disclaimer">*Visualisasi simulasi untuk demonstrasi antarmuka, bukan spektrogram data real.</p>
+                  </div>
+                  <div class="alert alert-info" style="margin-top:12px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M12 8v5M12 16h.01"/></svg>
+                    <p><b>Interpretasi Klinis</b><br><span id="clinicalInterpretationText">Memuat interpretasi...</span></p>
                   </div>
                 </div>
               </div>
@@ -526,7 +529,7 @@
         <div class="device-label lbl-kanan">Kanan ▶</div>
       </div>
       <div class="device-disclaimer">
-        Bagian input pada purwarupa ini, meliputi identitas pasien, alur navigasi, dan struktur formulir, telah merepresentasikan rancangan akhir sistem. Namun, seluruh data output, termasuk hasil prediksi, skor risiko, penjelasan SHAP, dan durasi tiap tahap pemrosesan, bersifat placeholder dan belum merepresentasikan performa maupun spesifikasi akhir, mengingat model machine learning belum diintegrasikan secara fungsional pada tahap purwarupa ini.
+        Seluruh bagian output pada purwarupa ini, termasuk hasil prediksi, skor risiko, penjelasan SHAP bersifat placeholder dan belum merepresentasikan performa maupun spesifikasi akhir, mengingat model machine learning belum diintegrasikan secara fungsional pada tahap purwarupa ini.
       </div>
     </div>
 

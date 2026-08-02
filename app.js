@@ -19,32 +19,32 @@
   /* ---------------- 6-tier risk text map ---------------- */
   const RESULT_TEXT = {
     "rendah": {
-      label:"RISIKO RENDAH - BUKAN LRTI", sub:"Stabil · Tidak Ada Tanda LRTI", cls:"low", acuTag:"Rendah",
+      disease:"Bukan LRTI", label:"Risiko Rendah (Bukan LRTI)", sub:"Stabil · Tidak Ada Tanda LRTI", cls:"low", acuTag:"Rendah",
       action:"Rawat jalan di rumah. Edukasi orang tua mengenai tanda bahaya, dan jadwalkan kontrol ulang bila gejala memburuk.",
       checklist:["Edukasi tanda bahaya kepada orang tua/pengasuh","Anjurkan kontrol ulang jika gejala memburuk","Pastikan asupan cairan & nutrisi tetap terjaga"]
     },
     "sedang-pneumonia": {
-      label:"RISIKO SEDANG - DUGAAN PNEUMONIA", sub:"Moderate · Perlu Terapi & Observasi", cls:"mid", acuTag:"Sedang",
+      disease:"Dugaan Pneumonia", label:"Risiko Sedang – Dugaan Pneumonia", sub:"Sedang · Perlu Terapi & Observasi", cls:"mid", acuTag:"Sedang",
       action:"Berikan antibiotik oral sesuai pedoman MTBS, observasi kondisi 24 jam, dan edukasi tanda bahaya untuk kembali segera.",
       checklist:["Berikan Antibiotik Oral Sesuai Pedoman MTBS","Observasi Kondisi Selama 24 Jam","Edukasi Tanda Bahaya untuk Kembali Segera"]
     },
     "tinggi-pneumonia": {
-      label:"RISIKO TINGGI - PNEUMONIA BERAT", sub:"Severe · Immediate Action Required", cls:"high", acuTag:"Tinggi",
+      disease:"Dugaan Pneumonia Berat", label:"Risiko Tinggi – Dugaan Pneumonia Berat", sub:"Berat · Perlu Tindakan Segera", cls:"high", acuTag:"Tinggi",
       action:"Rujuk segera ke RS/IGD, berikan terapi oksigen, dan beri dosis pertama antibiotik IV sebelum rujukan.",
       checklist:["Berikan Terapi Oksigen (2–4 L/menit)","Beri Dosis Pertama Antibiotik IV","Siapkan Rujukan Segera","Pantau Tanda Vital Tiap 15 Menit"]
     },
     "sedang-bronkiolitis": {
-      label:"RISIKO SEDANG - DUGAAN BRONKIOLITIS", sub:"Moderate · Tatalaksana Suportif", cls:"mid", acuTag:"Sedang",
+      disease:"Dugaan Bronkiolitis", label:"Risiko Sedang – Dugaan Bronkiolitis", sub:"Sedang · Tatalaksana Suportif", cls:"mid", acuTag:"Sedang",
       action:"Berikan tatalaksana suportif (bersihkan jalan napas, jaga hidrasi), observasi, dan edukasi tanda bahaya.",
       checklist:["Bersihkan Jalan Napas (Nasal Suction)","Jaga Asupan Cairan/Hidrasi","Observasi Perkembangan Gejala"]
     },
     "tinggi-bronkiolitis": {
-      label:"RISIKO TINGGI - BRONKIOLITIS BERAT", sub:"Severe · Immediate Action Required", cls:"high", acuTag:"Tinggi",
+      disease:"Dugaan Bronkiolitis Berat", label:"Risiko Tinggi – Dugaan Bronkiolitis Berat", sub:"Berat · Perlu Tindakan Segera", cls:"high", acuTag:"Tinggi",
       action:"Rujuk segera ke RS/IGD, berikan terapi oksigen 2–4 L/menit, dan pantau tanda vital tiap 15 menit.",
       checklist:["Berikan Terapi Oksigen (2–4 L/menit)","Siapkan Rujukan Segera ke RS/IGD","Pantau Tanda Vital Tiap 15 Menit"]
     },
     "sedang-asma": {
-      label:"RISIKO SEDANG - DUGAAN ASMA", sub:"Moderate · Riwayat Wheezing Berulang", cls:"mid", acuTag:"Sedang",
+      disease:"Dugaan Asma", label:"Risiko Sedang – Dugaan Asma", sub:"Sedang · Riwayat Wheezing Berulang", cls:"mid", acuTag:"Sedang",
       action:"Berikan bronkodilator kerja cepat, edukasi kontrol asma pada pengasuh, dan jadwalkan kontrol ulang.",
       checklist:["Berikan Bronkodilator Kerja Cepat","Edukasi Kontrol Asma pada Pengasuh","Jadwalkan Kontrol Ulang"]
     },
@@ -192,7 +192,6 @@
   /* ---------------- BERANDA ---------------- */
   function renderBeranda(){
     $("#statPasien").textContent = history.length;
-    $("#statBahaya").textContent = history.filter(h=>RESULT_TEXT[h.tier].cls==="high").length;
     const list = history.slice(0,3);
     $("#homeHistoryList").innerHTML = list.map(h=>historyItemHTML(h)).join("") ||
       `<p style="font-size:12.5px;color:var(--ink-300);">Belum ada riwayat pemeriksaan.</p>`;
@@ -205,7 +204,7 @@
       <div class="num" style="background:${cls==='high'?'var(--red-600)':cls==='mid'?'var(--amber-600)':'var(--green-700)'}">${cls==="high"?"!":"✓"}</div>
       <div class="content">
         <h4>${h.name}</h4>
-        <p>${rt.label.split(" - ")[1]||rt.label}</p>
+        <p>${rt.label}</p>
         <span class="pill ${CLS_PILL[cls]}">${cls==='high'?"Rujukan":cls==='mid'?"Pemantauan":"Selesai"}</span>
       </div>
     </div>`;
@@ -239,8 +238,7 @@
       if(i===activeIdx && (mode==="recording"||mode==="badsignal")) cls+=" active"; else if(done) cls+=" done";
       let statusHtml = "";
       if(done){
-        const map = { crackle:["tag-crackle","Crackle"], wheeze:["tag-wheeze","Wheeze"], normal:["tag-normal","Normal"] };
-        statusHtml = `<span class="point-status pill-tag ${map[done.result][0]}">${map[done.result][1]}</span>`;
+        statusHtml = `<span class="point-status pill-tag tag-normal">✓ Terekam</span>`;
       } else if(i===activeIdx && mode==="recording"){
         statusHtml = `<span class="point-status" style="color:var(--green-700)">Merekam…</span>`;
       } else if(i===activeIdx && mode==="badsignal"){
@@ -436,7 +434,12 @@
 
     const finalFactors = factors.filter(f=>!f.skip).sort((a,b)=>b.weight-a.weight).slice(0,5);
     const sumW = finalFactors.reduce((s,f)=>s+f.weight,0) || 1;
-    finalFactors.forEach(f=> f.relPct = Math.round((f.weight/sumW)*100));
+    finalFactors.forEach(f=>{
+      f.relPct = Math.round((f.weight/sumW)*100);
+      // nilai kontribusi ala-SHAP, diturunkan dari bobot faktor (simulasi, bukan nilai model asli)
+      const magnitude = 0.10 + (f.weight/100)*0.40 + rand(-0.025,0.025);
+      f.shap = (f.positive ? magnitude : -magnitude);
+    });
 
     state.result = {
       tier, severity, jenis, confidence, chestIndrawing, override,
@@ -458,14 +461,18 @@
     $("#resultPatientLine").innerHTML = `Pasien: An. ${p.name || "—"}<br>${p.age||"—"} Bulan`;
 
     const spo2Box = $("#critSpo2"); const rrBox = $("#critRR"); const tempBox = $("#critTemp"); const chestBox = $("#critChest");
-    setCritBox(spo2Box, v.spo2+"%", v.spo2<90?"KRITIS / CRITICAL":v.spo2<95?"RENDAH / LOW":"NORMAL", v.spo2<90?"crit-red":v.spo2<95?"crit-amber":"crit-green");
-    setCritBox(rrBox, r.rrValue+"<span>x/mnt</span>", r.rrValue>=r.rrThreshold+10?"CEPAT / FAST":r.rrValue>=r.rrThreshold?"CEPAT / FAST":"NORMAL", r.rrValue>=r.rrThreshold?"crit-red":"crit-green");
-    setCritBox(tempBox, v.temp.toFixed(1)+"<span>°C</span>", v.temp>=38?"DEMAM / FEVER":"NORMAL", v.temp>=38?"crit-amber":"crit-green");
-    setCritBox(chestBox, r.chestIndrawing?"Positif":"Negatif", r.chestIndrawing?"BAHAYA / DANGER":"NORMAL", r.chestIndrawing?"crit-red":"crit-green");
+    setCritBox(spo2Box, v.spo2+"%", v.spo2<90?"KRITIS":v.spo2<95?"RENDAH":"NORMAL", v.spo2<90?"crit-red":v.spo2<95?"crit-amber":"crit-green");
+    setCritBox(rrBox, r.rrValue+"<span>x/mnt</span>", r.rrValue>=r.rrThreshold+10?"CEPAT":r.rrValue>=r.rrThreshold?"CEPAT":"NORMAL", r.rrValue>=r.rrThreshold?"crit-red":"crit-green");
+    setCritBox(tempBox, v.temp.toFixed(1)+"<span>°C</span>", v.temp>=38?"DEMAM":"NORMAL", v.temp>=38?"crit-amber":"crit-green");
+    setCritBox(chestBox, r.chestIndrawing?"Positif":"Negatif", r.chestIndrawing?"BAHAYA":"NORMAL", r.chestIndrawing?"crit-red":"crit-green");
 
     $("#actionChecklist").innerHTML = rt.checklist.map(t=>`
       <label class="check-row"><input type="checkbox"><span>${t}</span></label>`).join("");
     $("#resultActionNote").textContent = rt.action;
+
+    $("#resultPointList").innerHTML = POINTS.map(pt=>
+      `<div class="point-row done"><div class="point-num">✓</div><div class="point-name">${pt.id}. ${pt.name}</div><span class="point-status pill-tag tag-normal">Terekam</span></div>`
+    ).join("");
   }
   function setCritBox(box, valHTML, tagText, cls){
     box.className = "crit-box " + cls;
@@ -482,34 +489,119 @@
     box.className = "alert " + (rt.cls==="high"?"alert-red":rt.cls==="mid"?"alert-amber":"alert-green");
     const top = r.factors.slice(0,3).map(f=>f.label.replace(/\s*\(.*?\)/,"").toLowerCase());
     $("#aiConclusionText").textContent =
-      `Pasien dinilai ${CLS_LABEL[rt.cls]==="Tinggi"?"Risiko Tinggi":CLS_LABEL[rt.cls]==="Sedang"?"Risiko Sedang":"Risiko Rendah"} karena ditemukan ${top.join(", ")||"pola akustik & parameter klinis yang sesuai ambang normal"}. Kondisi ini menunjukkan ${rt.label.split(" - ")[1]||rt.label} yang ${rt.cls==="high"?"membutuhkan rujukan segera ke RS/IGD.":rt.cls==="mid"?"memerlukan terapi dan observasi ketat.":"tidak menunjukkan tanda LRTI signifikan."}`;
-    drawSpectrogram(rt.cls, r.crackleCount);
+      `Pasien dinilai ${CLS_LABEL[rt.cls]==="Tinggi"?"Risiko Tinggi":CLS_LABEL[rt.cls]==="Sedang"?"Risiko Sedang":"Risiko Rendah"} karena ditemukan ${top.join(", ")||"pola akustik & parameter klinis yang sesuai ambang normal"}. Kondisi ini menunjukkan ${rt.disease} yang ${rt.cls==="high"?"membutuhkan rujukan segera ke RS/IGD.":rt.cls==="mid"?"memerlukan terapi dan observasi ketat.":"tidak menunjukkan tanda LRTI signifikan."}`;
+
+    // teks interpretasi klinis, mengikuti pola dominan hasil klasifikasi akustik
+    const ACOUSTIC_INFO = {
+      "Crackle-dominant": { pattern:"fine inspiratory crackles", range:"450–850 Hz, fase inspirasi" },
+      "Wheeze-dominant":  { pattern:"wheeze ekspiratori",         range:"300–600 Hz, fase ekspirasi" },
+      "Normal-dominant":  { pattern:"pola suara napas normal",    range:"vesikuler, tanpa bunyi tambahan" },
+    };
+    const info = ACOUSTIC_INFO[r.acousticLabel] || ACOUSTIC_INFO["Normal-dominant"];
+    $("#clinicalInterpretationText").textContent =
+      r.acousticLabel === "Normal-dominant"
+        ? `Tidak ditemukan area intensitas tinggi (merah/kuning) yang signifikan pada spektrogram. Pola suara napas berada dalam rentang normal, mendukung klasifikasi ${rt.label.toUpperCase()}.`
+        : `Area dengan intensitas tinggi (merah/kuning) pada spektrogram menandakan fitur akustik yang paling berkontribusi terhadap prediksi. Pola spesifik ini sering berkorelasi dengan indikasi ${info.pattern}, yang mendukung klasifikasi ${rt.label.toUpperCase()}.`;
+
+    drawSpectrogram(rt.cls, r.acousticLabel, info);
   }
 
-  function drawSpectrogram(cls, crackleCount){
+  function drawSpectrogram(cls, acousticLabel, info){
     const canvas = $("#spectroCanvas");
     const ctx = canvas.getContext("2d");
     const W = canvas.width, H = canvas.height;
     ctx.clearRect(0,0,W,H);
-    ctx.fillStyle = "#070908";
+    ctx.fillStyle = "#0A0E14";
     ctx.fillRect(0,0,W,H);
 
-    const cols = 48, rows = 22;
-    const cw = W/cols, ch = H/rows;
-    const hotChance = cls==="high" ? 0.34 : cls==="mid" ? 0.20 : 0.08;
+    const margin = { left:42, right:64, top:14, bottom:26 };
+    const plotW = W - margin.left - margin.right;
+    const plotH = H - margin.top - margin.bottom;
+    const hotChance = cls==="high" ? 0.34 : cls==="mid" ? 0.20 : 0.06;
+
+    const cols = 46, rows = 20;
+    const cw = plotW/cols, ch = plotH/rows;
+    let hotXCenterSum = 0, hotCount = 0;
 
     for(let x=0;x<cols;x++){
       for(let y=0;y<rows;y++){
-        const centerBias = 1 - Math.abs((y/rows)-0.5)*1.3;
-        let v = Math.random()*0.5 + Math.random()*centerBias*0.5;
-        if(Math.random() < hotChance*centerBias) v = 0.7 + Math.random()*0.3;
-        const hue = v>0.62 ? lerpColor([201,54,74], [255,196,0], (v-0.62)/0.38) : lerpColor([12,70,60],[80,190,150], v/0.62);
+        const centerBias = 1 - Math.abs((y/rows)-0.42)*1.3;
+        let v = Math.random()*0.45 + Math.random()*Math.max(centerBias,0)*0.5;
+        if(Math.random() < hotChance*Math.max(centerBias,0) && x < cols*0.55){ v = 0.7 + Math.random()*0.3; hotXCenterSum += x; hotCount++; }
+        const hue = v>0.62 ? lerpColor([201,54,74], [255,196,0], (v-0.62)/0.38) : lerpColor([10,40,55],[40,150,140], v/0.62);
         ctx.fillStyle = `rgb(${hue[0]},${hue[1]},${hue[2]})`;
-        ctx.globalAlpha = 0.55 + v*0.45;
-        ctx.fillRect(x*cw, H-(y+1)*ch, cw+0.6, ch+0.6);
+        ctx.globalAlpha = 0.6 + v*0.4;
+        ctx.fillRect(margin.left + x*cw, margin.top + (rows-1-y)*ch, cw+0.6, ch+0.6);
       }
     }
     ctx.globalAlpha = 1;
+
+    /* ---- sumbu Y (Frekuensi) ---- */
+    ctx.strokeStyle = "rgba(255,255,255,.55)";
+    ctx.fillStyle = "rgba(255,255,255,.75)";
+    ctx.font = "9px Inter, sans-serif";
+    ctx.textAlign = "right";
+    ctx.textBaseline = "middle";
+    ctx.beginPath();
+    ctx.moveTo(margin.left, margin.top); ctx.lineTo(margin.left, margin.top+plotH); ctx.lineTo(margin.left+plotW, margin.top+plotH);
+    ctx.stroke();
+    const yTicks = [["2000",0.02],["1500",0.27],["1000",0.52],["500",0.74],["100",0.97]];
+    yTicks.forEach(([label,frac])=>{
+      const ypx = margin.top + plotH*frac;
+      ctx.fillText(label, margin.left-6, ypx);
+    });
+    ctx.save();
+    ctx.translate(11, margin.top+plotH/2);
+    ctx.rotate(-Math.PI/2);
+    ctx.textAlign = "center";
+    ctx.fillText("Frekuensi (Hz)", 0, 0);
+    ctx.restore();
+
+    /* ---- sumbu X (Waktu) ---- */
+    ctx.textAlign = "center";
+    ctx.textBaseline = "top";
+    for(let t=0; t<=3.0001; t+=0.5){
+      const xpx = margin.left + (t/3)*plotW;
+      ctx.fillText(t.toFixed(1), xpx, margin.top+plotH+6);
+    }
+    ctx.fillText("Waktu (s)", margin.left+plotW/2, margin.top+plotH+16);
+
+    /* ---- legend Aktivasi (kanan) ---- */
+    const lgX = margin.left+plotW+16, lgY = margin.top+2, lgW = 10, lgH = plotH*0.62;
+    const grad = ctx.createLinearGradient(0, lgY, 0, lgY+lgH);
+    grad.addColorStop(0, "rgb(255,60,60)"); grad.addColorStop(0.5, "rgb(255,196,0)"); grad.addColorStop(1, "rgb(20,70,90)");
+    ctx.fillStyle = grad;
+    ctx.fillRect(lgX, lgY, lgW, lgH);
+    ctx.strokeStyle = "rgba(255,255,255,.4)"; ctx.strokeRect(lgX, lgY, lgW, lgH);
+    ctx.textAlign = "left"; ctx.textBaseline = "middle"; ctx.fillStyle = "rgba(255,255,255,.85)";
+    ctx.font = "8.5px Inter, sans-serif";
+    ctx.fillText("Aktivasi", lgX-2, lgY-9);
+    ctx.fillText("Tinggi", lgX+lgW+4, lgY+4);
+    ctx.fillText("Rendah", lgX+lgW+4, lgY+lgH-4);
+
+    /* ---- anotasi pola dominan ---- */
+    if(acousticLabel !== "Normal-dominant" && hotCount>0){
+      const hotXFrac = (hotXCenterSum/hotCount)/cols;
+      const bx = margin.left + hotXFrac*plotW + cw*2;
+      const by = margin.top + plotH*0.40;
+      const lx = bx + 34;
+      ctx.strokeStyle = "rgba(255,180,190,.9)";
+      ctx.lineWidth = 1;
+      ctx.beginPath();
+      ctx.moveTo(bx, by-16); ctx.lineTo(lx-8, by-16);
+      ctx.lineTo(lx-8, by+16); ctx.lineTo(bx, by+16);
+      ctx.moveTo(lx-8, by); ctx.lineTo(lx, by);
+      ctx.stroke();
+      ctx.fillStyle = "rgba(255,205,210,.95)";
+      ctx.font = "8.5px Inter, sans-serif";
+      ctx.textAlign = "left"; ctx.textBaseline = "middle";
+      const label1 = "Aktivasi dominan:";
+      const label2 = info.pattern;
+      const label3 = `(${info.range})`;
+      ctx.fillText(label1, lx+4, by-9);
+      ctx.fillText(label2, lx+4, by+1);
+      ctx.fillText(label3, lx+4, by+11);
+    }
   }
   function lerpColor(a,b,t){
     t = clamp(t,0,1);
@@ -518,16 +610,16 @@
 
   /* ---------------- FAKTOR RISIKO ---------------- */
   function factorRowHTML(f){
+    const shapText = (f.shap>=0?"+":"") + f.shap.toFixed(2);
     return `<div class="factor-row">
-      <div class="factor-top"><b>${f.label}</b></div>
+      <div class="factor-top"><b>${f.label}</b><span class="factor-shap ${f.positive?'shap-pos':'shap-neg'}">${shapText}</span></div>
       <div class="factor-track"><div class="factor-fill ${f.positive? (f.weight>=70?'fill-high':'fill-mid') : 'fill-low'}" style="width:${f.weight}%"></div></div>
     </div>`;
   }
 
   function renderFaktorRisiko(){
     const r = state.result; if(!r) return;
-    const rt = RESULT_TEXT[r.tier];
-    $("#whyTitle").textContent = "Mengapa " + rt.acuTag + "?";
+    $("#whyTitle").textContent = "Kontribusi Parameter";
     $("#factorBars").innerHTML = r.factors.map(f=>factorRowHTML(f)).join("");
     $("#confidenceVal").textContent = r.confidence.toFixed(1)+"%";
   }
@@ -650,7 +742,7 @@
         <tr><td>Tingkat Kepercayaan AI</td><td>${r.confidence.toFixed(1)}%</td></tr>
       </table>
       <h3>Faktor Kontribusi Utama (SHAP)</h3>
-      ${r.factors.map(f=>`<div class="factor"><span>${f.label}</span><span>${f.relPct}%</span></div>`).join("")}
+      ${r.factors.map(f=>`<div class="factor"><span>${f.label}</span><span>${(f.shap>=0?"+":"")+f.shap.toFixed(2)}</span></div>`).join("")}
       <footer>
         Dokumen ini dihasilkan oleh prototipe antarmuka ANTARAKALA untuk keperluan demonstrasi Lomba Esai Nasional THEORIST UKMP UNNES 2026.
         Seluruh nilai bersifat simulasi dan tidak merepresentasikan hasil diagnosis medis sesungguhnya.

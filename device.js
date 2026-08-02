@@ -14,8 +14,6 @@
   ];
   const REC_SECONDS = 2;          // durasi rekam per titik (dipercepat utk demo)
   const BAD_SIGNAL_CHANCE = 0.16; // peluang kualitas sinyal rendah per rekaman
-  const RESULT_COLORS = { crackle:"#D9364A", wheeze:"#C98A00", normal:"#0E6E4A" };
-  const RESULT_LABELS = { crackle:"CRACKLE", wheeze:"WHEEZE", normal:"NORMAL" };
 
   const D = {
     state: "idle",   // idle | recording | badsignal | complete | allDone
@@ -53,7 +51,7 @@
       const res = D.results[i];
       let fill = "#fff", stroke = "#9AA39D", strokeW = 1.4, textFill = "#3A423F", glow = "";
 
-      if(res){ fill = RESULT_COLORS[res.result]; stroke = fill; textFill = "#fff"; }
+      if(res){ fill = "#007A7A"; stroke = fill; textFill = "#fff"; }
       if(isActive && D.state === "idle"){ stroke = "#1C7FD6"; strokeW = 2.4; if(!res){ textFill = "#1C7FD6"; } }
       if(isActive && (D.state === "recording")){
         fill = "#E8720C"; stroke = "#E8720C"; textFill = "#fff";
@@ -123,13 +121,13 @@
     let resultHTML;
     const res = D.results[D.cursor];
     if(allDone){
-      resultHTML = `<b style="color:#0E6E4A; font-size:11px;">✓ SELESAI</b><span>Lanjutkan di HP / tablet</span>`;
+      resultHTML = `<b style="color:#0E6E4A; font-size:11px;">✓ SELESAI</b><span>Lanjutkan di Web Lokal</span>`;
     } else if(D.state === "recording"){
-      resultHTML = `<b style="color:#3A423F;">MEREKAM…</b><span>Jangan gerakkan sensor</span>`;
+      resultHTML = `<b style="color:#3A423F;">MEREKAM…</b><span>Jangan gerakkan stetoskop</span>`;
     } else if(D.state === "badsignal"){
       resultHTML = `<b style="color:#C98A00;">SINYAL RENDAH</b><span>Mengulang otomatis…</span>`;
     } else if(res){
-      resultHTML = `<b style="color:${RESULT_COLORS[res.result]};">${RESULT_LABELS[res.result]}</b><span>${res.confidence}% Keyakinan</span>`;
+      resultHTML = `<b style="color:#007A7A;">✓ TEREKAM</b><span>Lanjut ke titik berikutnya</span>`;
     } else {
       resultHTML = `<b style="color:#3A423F; font-size:8px;">SIAP MEREKAM</b><span>Tekan PILIH untuk mulai</span>`;
     }
@@ -144,7 +142,7 @@
       </div>
       <div class="dlcd-body">
         ${bodySVG()}
-        <div class="dlcd-labels"><span>Belakang</span><span>Depan</span></div>
+        <div class="dlcd-labels"><span>Punggung</span><span>Dada</span></div>
       </div>
       <div class="dlcd-resultrow">
         <div class="dlcd-result">${resultHTML}</div>
