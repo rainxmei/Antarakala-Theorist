@@ -424,12 +424,24 @@
     const acousticLabel = crackleCount>wheezeCount ? "Crackle-dominant" : wheezeCount>crackleCount ? "Wheeze-dominant" : "Normal-dominant";
 
     const factors = [];
-    factors.push({ label:`Oksigen ${v.spo2<95?"Rendah":"Normal"} (${v.spo2}%)`, weight:spo2Score/3*100, positive:spo2Score>0, skip:spo2Score===0 });
-    factors.push({ label:"Tarikan Dinding Dada (Sensor Fusion)", weight:100, positive:true, skip:!chestIndrawing });
-    factors.push({ label:`Bunyi Crackle Paru${crackleCount?` (${crackleCount} Titik)`:""}`, weight:crackleCount/6*100, positive:crackleCount>0, skip:crackleCount===0 });
-    factors.push({ label:`Bunyi Wheeze Paru${wheezeCount?` (${wheezeCount} Titik)`:""}`, weight:wheezeCount/6*100, positive:wheezeCount>0, skip:wheezeCount===0 });
-    factors.push({ label:`Demam (${v.temp.toFixed(1)}°C)`, weight:tempScore/3*100, positive:tempScore>0, skip:tempScore===0 });
-    factors.push({ label:`Laju Napas Cepat (${rrValue}/mnt)`, weight:rrScore/2*100, positive:rrScore>0, skip:rrScore===0 });
+    factors.push(spo2Score>0
+      ? { label:`Oksigen Rendah (${v.spo2}%)`, weight:spo2Score/3*100, positive:true, skip:false }
+      : { label:`Oksigen Normal (${v.spo2}%)`, weight:18, positive:false, skip:false });
+    factors.push(chestIndrawing
+      ? { label:"Tarikan Dinding Dada (Sensor Fusion)", weight:100, positive:true, skip:false }
+      : { label:"Tidak Ada Tarikan Dinding Dada", weight:20, positive:false, skip:false });
+    factors.push(crackleCount>0
+      ? { label:`Bunyi Crackle Paru (${crackleCount} Titik)`, weight:crackleCount/6*100, positive:true, skip:false }
+      : { label:"Tidak Ditemukan Bunyi Crackle", weight:16, positive:false, skip:false });
+    factors.push(wheezeCount>0
+      ? { label:`Bunyi Wheeze Paru (${wheezeCount} Titik)`, weight:wheezeCount/6*100, positive:true, skip:false }
+      : { label:"Tidak Ditemukan Bunyi Wheeze", weight:14, positive:false, skip:false });
+    factors.push(tempScore>0
+      ? { label:`Demam (${v.temp.toFixed(1)}°C)`, weight:tempScore/3*100, positive:true, skip:false }
+      : { label:`Suhu Tubuh Normal (${v.temp.toFixed(1)}°C)`, weight:16, positive:false, skip:false });
+    factors.push(rrScore>0
+      ? { label:`Laju Napas Cepat (${rrValue}/mnt)`, weight:rrScore/2*100, positive:true, skip:false }
+      : { label:`Laju Napas Normal (${rrValue}/mnt)`, weight:16, positive:false, skip:false });
     factors.push({ label:"Riwayat Wheezing Berulang", weight:55, positive: jenis==="asma", skip: c.wheeze!=="ya" });
 
     const finalFactors = factors.filter(f=>!f.skip).sort((a,b)=>b.weight-a.weight).slice(0,5);
@@ -470,9 +482,11 @@
       <label class="check-row"><input type="checkbox"><span>${t}</span></label>`).join("");
     $("#resultActionNote").textContent = rt.action;
 
-    $("#resultPointList").innerHTML = POINTS.map(pt=>
-      `<div class="point-row done"><div class="point-num">✓</div><div class="point-name">${pt.id}. ${pt.name}</div><span class="point-status pill-tag tag-normal">Terekam</span></div>`
-    ).join("");
+    $("#resultPointList").innerHTML = state.points.map((pt,i)=>{
+      const map = { crackle:["tag-crackle","Crackle"], wheeze:["tag-wheeze","Wheeze"], normal:["tag-normal","Normal"] };
+      const tag = pt ? map[pt.result] : ["tag-normal","—"];
+      return `<div class="point-row done"><div class="point-num">✓</div><div class="point-name">${POINTS[i].id}. ${POINTS[i].name}</div><span class="point-status pill-tag ${tag[0]}">${tag[1]}</span></div>`;
+    }).join("");
   }
   function setCritBox(box, valHTML, tagText, cls){
     box.className = "crit-box " + cls;

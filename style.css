@@ -407,7 +407,7 @@ a{color:inherit;}
 
 .device-led{
   position:absolute;
-  left:90%; top:6%;
+  left:87%; top:5.8%;
   width:3.1%; height:2.6%;
   transform:translate(-50%,-50%);
   border-radius:50%;
