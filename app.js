@@ -470,7 +470,6 @@
     $("#resultTitle").textContent = rt.label;
     $("#resultSub").textContent = rt.sub;
     $("#resultAcousticTag").textContent = "Label Akustik: " + r.acousticLabel;
-    $("#resultPatientLine").innerHTML = `Pasien: An. ${p.name || "—"}<br>${p.age||"—"} Bulan`;
 
     const spo2Box = $("#critSpo2"); const rrBox = $("#critRR"); const tempBox = $("#critTemp"); const chestBox = $("#critChest");
     setCritBox(spo2Box, v.spo2+"%", v.spo2<90?"KRITIS":v.spo2<95?"RENDAH":"NORMAL", v.spo2<90?"crit-red":v.spo2<95?"crit-amber":"crit-green");

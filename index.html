@@ -113,10 +113,10 @@
                   </div>
                   <div class="field">
                     <label>Status Imunisasi PCV</label>
-                    <div class="seg seg-block" id="pPCV">
-                      <button data-val="lengkap"><b>Lengkap</b></button>
-                      <button data-val="belum"><b>Belum Lengkap</b></button>
-                      <button data-val="tidaktahu"><b>Tidak Tahu</b></button>
+                    <div class="seg seg-radio" id="pPCV">
+                      <button data-val="lengkap"><i class="dot"></i><span><b>Lengkap</b></span></button>
+                      <button data-val="belum"><i class="dot"></i><span><b>Belum Lengkap</b></span></button>
+                      <button data-val="tidaktahu"><i class="dot"></i><span><b>Tidak Tahu</b></span></button>
                     </div>
                   </div>
                   <div class="field">
@@ -323,18 +323,16 @@
                 <span class="brand-name">ANTARAKALA</span>
                 <!-- <div class="header-side"><div class="avatar-circle">CP</div></div> -->
               </header>
-              <div class="screen-body">
-                <div class="result-banner" id="resultBanner">
-                  <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="margin-bottom:6px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
-                  <h3 id="resultTitle">RISIKO TINGGI</h3>
-                  <p id="resultSub">Severe · Immediate Action Required</p>
-                  <span class="tag-focus" id="resultAcousticTag" style="margin-top:8px; display:inline-block;">Label Akustik: —</span>
+              <div class="screen-body" style="padding-top:12px;">
+                <div class="result-banner" id="resultBanner" style="padding:14px 16px;">
+                  <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" style="margin-bottom:4px;"><path d="M10.29 3.86L1.82 18a2 2 0 001.71 3h16.94a2 2 0 001.71-3L13.71 3.86a2 2 0 00-3.42 0z"/><path d="M12 9v4M12 17h.01"/></svg>
+                  <h3 id="resultTitle" style="font-size:17px;">RISIKO TINGGI</h3>
+                  <p id="resultSub" style="font-size:12.5px;">Severe · Immediate Action Required</p>
+                  <span class="tag-focus" id="resultAcousticTag" style="margin-top:6px; display:inline-block;">Label Akustik: —</span>
                 </div>
 
-                <p class="subtext" id="resultPatientLine" style="margin-bottom:14px;">Pasien: — <br>— Bulan</p>
-
-                <div class="card">
-                  <div class="card-title">
+                <div class="card" style="margin-top:12px; margin-bottom:10px; padding:12px;">
+                  <div class="card-title" style="margin-bottom:8px;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
                     Parameter Kritis
                   </div>
@@ -346,21 +344,21 @@
                   </div>
                 </div>
 
-                <div class="card">
-                  <div class="card-title">
+                <div class="card" style="margin-bottom:10px; padding:12px;">
+                  <div class="card-title" style="margin-bottom:6px;">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
+                    Hasil Auskultasi 6 Titik
+                  </div>
+                  <div id="resultPointList" class="point-list point-list-compact"></div>
+                </div>
+
+                <div class="card" style="padding:12px;">
+                  <div class="card-title" style="margin-bottom:6px;">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 11l3 3L22 4"/><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"/></svg>
                     Tindakan Rekomendasi
                   </div>
                   <div id="actionChecklist" class="check-list"></div>
                   <p style="font-size:10.5px; color:var(--ink-500); margin-top:10px; line-height:1.5;" id="resultActionNote"></p>
-                </div>
-
-                <div class="card">
-                  <div class="card-title">
-                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><path d="M9 12l2 2 4-4"/></svg>
-                    Hasil Auskultasi 6 Titik
-                  </div>
-                  <div id="resultPointList" class="point-list"></div>
                 </div>
               </div>
               <div style="padding:0 18px 18px; display:flex; flex-direction:column; gap:10px;">

@@ -230,6 +230,11 @@ a{color:inherit;}
 .timer-bar-fill{height:100%; background:var(--green-600); width:0%; transition:width .25s linear;}
 
 .point-list{display:flex; flex-direction:column; gap:7.5px;}
+.point-list-compact{gap:5px;}
+.point-list-compact .point-row{padding:6.5px 10px; gap:8px;}
+.point-list-compact .point-num{width:16px; height:16px; font-size:12px;}
+.point-list-compact .point-name{font-size:14.5px;}
+.point-list-compact .point-status{font-size:11px; padding:2px 7px;}
 .point-row{background:#fff; border:1px solid var(--border); border-radius:var(--radius-md); padding:10.5px 12px; display:flex; align-items:center; gap:10.5px;}
 .point-row.active{background:var(--green-800); border-color:var(--green-800);}
 .point-row.active .point-num{background:#fff; color:var(--green-800);}
