@@ -5,9 +5,9 @@
 
 *{box-sizing:border-box; margin:0; padding:0;}
 html,body{height:100%; overflow:hidden;}
-body{font-family:var(--font-body); color:var(--ink-900); background: #FFF;}
+body{font-family:var(--font-body); color:var(--ink-900); background: 
     /* radial-gradient(1200px 600px at 12% -10%, #123B2C 0%, #0B2A20 45%, #081D17 100%); height:100vh; -webkit-font-smoothing:antialiased;} */
-    /* radial-gradient(1200px 600px at 12% -10%, #123B3B 0%, #0B2A2A 45%, #081D1D 100%); height:100vh; -webkit-font-smoothing:antialiased;} */
+    radial-gradient(1200px 600px at 12% -10%, #123B3B 0%, #0B2A2A 45%, #081D1D 100%); height:100vh; -webkit-font-smoothing:antialiased;}
 
 button{font-family:inherit; cursor:pointer;}
 a{color:inherit;}
@@ -432,9 +432,9 @@ a{color:inherit;}
 
 .device-caption{
   display:flex; align-items:flex-start; gap:8px;
-  color:#A8E8E8; font-size:18.5px; font-weight:600; text-align:left; width:390px; line-height:1.5;
+  color:#006161; font-size:18.5px; font-weight:600; text-align:left; width:390px; line-height:1.5;
 }
-.device-caption b{color:#CFF3F3; font-weight:700;}
+.device-caption b{color:#006161; font-weight:700;}
 .device-caption svg{flex:0 0 auto; opacity:.85; margin-top:1px;}
 
 .device-disclaimer{
@@ -446,13 +446,13 @@ a{color:inherit;}
      Lebarnya sengaja dibuat lebih LEBAR dari device (bukan dibatasi sama
      sempit) supaya teksnya memanjang ke kanan sesuai referensi, bukan
      menumpuk jadi banyak baris pendek. */
-  width:640px;
+  width:390px;
   font-size:16px;
   line-height:1.55;
-  color:#7FA3A0;
+  color:#006161;
   text-align:left;
   padding-top:8px;
-  border-top:1px solid rgba(255,255,255,.10);
+  border-top:1px solid rgba(0,97,97,.15);
 }
 
 /* ---- LCD inner UI (single-page layout) ---- */
